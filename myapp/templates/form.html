@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Student</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Add Student</h2>
+
+        <p style="text-align: center; color: #374151; margin-bottom: 20px;">
+            Logged in as: <strong>{{ username }}</strong>
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label>Department:</label>
+            <label>Department:</label>
+            <select name="department" required>
+                <option value="">Select Department</option>
+                <option value="CSE">CSE</option>
+                <option value="CIVIL">CIVIL</option>
+                <option value="AIDS">AIDS</option>
+                <option value="IT">IT</option>
+                <option value="ECE">ECE</option>
+                <option value="MECH">MECH</option>
+                <option value="EEE">EEE</option>
+            </select>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="roll_no">Roll No:</label>
+            <input type="text" name="roll_no" required>
+
+            <label for="email">E-Mail:</label>
+            <input type="email" name="email" value="{{ student.email }}" required pattern="^[a-z0-9]+@gmail\.com$">
+
+            <button type="submit">Save</button>
+        </form>
+
+        <div class="top-buttons">
+            <a href="/students/" class="main-btn">View All Students</a>
+            <a href="/home/" class="main-btn">Back to Home</a>
+            <a href="/logout/" class="main-btn logout-btn">Logout</a>
+        </div>
+    </div>
+</body>
+
+</html>

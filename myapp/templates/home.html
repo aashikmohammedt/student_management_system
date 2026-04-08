@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Student CRUD App</h1>
+
+        {% if login_message %}
+            <div class="message-box success-message">
+                {{ login_message }}
+            </div>
+        {% endif %}
+
+        <p style="margin-bottom: 10px; color: #1f2937; font-size: 18px;">
+            Logged in as: <strong>{{ username }}</strong>
+        </p>
+
+        <div class="top-buttons">
+            <a href="/form/" class="main-btn">Add Student</a>
+            <a href="/students/" class="main-btn">View Students</a>
+            <a href="/logout/" class="main-btn logout-btn">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

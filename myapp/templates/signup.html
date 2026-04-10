@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Management System - Sign In</title>
+    <title>Student Management System - Sign Up</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
@@ -16,12 +16,12 @@
             <div class="brand-badge">Student Management System</div>
             <h1 class="app-title">Student Management System</h1>
             <p class="page-subtitle">
-                Sign in to access the dashboard and manage student records securely.
+                Create an account to access the dashboard and manage student records securely.
             </p>
         </div>
 
         <div class="container">
-            <h2>Sign In</h2>
+            <h2>Create Account</h2>
 
             {% if messages %}
                 {% for message in messages %}
@@ -45,20 +45,37 @@
                        id="username"
                        name="username"
                        placeholder="Enter username"
+                       value="{{ form_data.username|default:'' }}"
                        required>
+
+                <label for="email">Gmail Address</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       placeholder="Enter Gmail address"
+                       value="{{ form_data.email|default:'' }}"
+                       required
+                       pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$">
 
                 <label for="password">Password</label>
                 <input type="password"
                        id="password"
                        name="password"
-                       placeholder="Enter password"
+                       placeholder="Create password"
                        required>
 
-                <button type="submit">Sign In</button>
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password"
+                       id="confirm_password"
+                       name="confirm_password"
+                       placeholder="Confirm password"
+                       required>
+
+                <button type="submit">Create Account</button>
             </form>
 
             <div class="top-buttons auth-links">
-                <a href="{% url 'signup' %}" class="main-btn btn-secondary">Don't have an account? Sign Up</a>
+                <a href="{% url 'login' %}" class="main-btn btn-secondary">Already have an account? Sign In</a>
             </div>
         </div>
 

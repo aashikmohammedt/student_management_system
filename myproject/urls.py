@@ -1,27 +1,34 @@
 from django.contrib import admin
 from django.urls import path
 from myapp.views import (
+    signup_view,
     login_view,
     logout_view,
     home,
     student_form,
-    success_page,
     student_list,
     edit_student,
-    delete_student
+    delete_confirm,
+    delete_student,
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Admin
+    path("admin/", admin.site.urls),
 
-    path('', login_view),
-    path('login/', login_view),
-    path('logout/', logout_view),
+    # Authentication
+    path("", login_view, name="root_login"),
+    path("signup/", signup_view, name="signup"),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
 
-    path('home/', home),
-    path('form/', student_form),
-    path('success/', success_page),
-    path('students/', student_list),
-    path('edit/<str:id>/', edit_student),
-    path('delete/<str:id>/', delete_student),
+    # Dashboard
+    path("home/", home, name="home"),
+
+    # Student CRUD
+    path("form/", student_form, name="student_form"),
+    path("students/", student_list, name="student_list"),
+    path("edit/<str:id>/", edit_student, name="edit_student"),
+    path("delete-confirm/<str:id>/", delete_confirm, name="delete_confirm"),
+    path("delete/<str:id>/", delete_student, name="delete_student"),
 ]

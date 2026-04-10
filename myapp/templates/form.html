@@ -1,57 +1,199 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Add Student</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - Add Student</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
-    <div class="container">
-        <h2>Add Student</h2>
+    <div class="page-shell">
 
-        <p style="text-align: center; color: #374151; margin-bottom: 20px;">
-            Logged in as: <strong>{{ username }}</strong>
-        </p>
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label>Department:</label>
-            <label>Department:</label>
-            <select name="department" required>
-                <option value="">Select Department</option>
-                <option value="CSE">CSE</option>
-                <option value="CIVIL">CIVIL</option>
-                <option value="AIDS">AIDS</option>
-                <option value="IT">IT</option>
-                <option value="ECE">ECE</option>
-                <option value="MECH">MECH</option>
-                <option value="EEE">EEE</option>
-            </select>
-
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" required>
-
-            <label for="roll_no">Roll No:</label>
-            <input type="text" name="roll_no" required>
-
-            <label for="email">E-Mail:</label>
-            <input type="email" name="email" value="{{ student.email }}" required pattern="^[a-z0-9]+@gmail\.com$">
-
-            <button type="submit">Save</button>
-        </form>
-
-        <div class="top-buttons">
-            <a href="/students/" class="main-btn">View All Students</a>
-            <a href="/home/" class="main-btn">Back to Home</a>
-            <a href="/logout/" class="main-btn logout-btn">Logout</a>
+        <div class="page-header">
+            <div class="brand-badge">Student Management System</div>
+            <h1 class="app-title">Student Management System</h1>
+            <p class="page-subtitle">
+                Add new student records with a clean and professional interface.
+            </p>
         </div>
+
+        <div class="container">
+            <h2>Add Student</h2>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message-box {% if message.tags == 'error' %}error-message{% elif message.tags == 'success' %}success-message{% else %}info-message{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if error %}
+            <div class="message-box error-message">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <p class="user-info">
+                Logged in as: <strong>{{ username }}</strong>
+            </p>
+
+            <form method="POST" id="studentForm">
+                {% csrf_token %}
+
+                <label for="name">Name</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       value="{{ form_data.name|default:'' }}"
+                       placeholder="Enter student name"
+                       required>
+
+                <label for="department">Department</label>
+
+                <!-- Hidden native select for form submission -->
+                <select name="department" id="department" required style="display:none;">
+                    <option value="" disabled {% if not form_data.department %}selected{% endif %}></option>
+                    <option value="CSE" {% if form_data.department == "CSE" %}selected{% endif %}>CSE</option>
+                    <option value="IT" {% if form_data.department == "IT" %}selected{% endif %}>IT</option>
+                    <option value="ECE" {% if form_data.department == "ECE" %}selected{% endif %}>ECE</option>
+                    <option value="EEE" {% if form_data.department == "EEE" %}selected{% endif %}>EEE</option>
+                    <option value="MECH" {% if form_data.department == "MECH" %}selected{% endif %}>MECH</option>
+                    <option value="CIVIL" {% if form_data.department == "CIVIL" %}selected{% endif %}>CIVIL</option>
+                    <option value="AIDS" {% if form_data.department == "AIDS" %}selected{% endif %}>AIDS</option>
+                </select>
+
+                <!-- Custom styled dropdown -->
+                <div class="custom-select-wrapper" id="deptWrapper" tabindex="0">
+                    <div class="custom-select-trigger" id="deptTrigger">
+                        <span id="deptLabel">Select Department</span>
+                        <span class="select-arrow">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="#64748b" stroke-width="2.4"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="custom-select-options" id="deptOptions">
+                        <div class="custom-select-option" data-value="CSE">CSE</div>
+                        <div class="custom-select-option" data-value="IT">IT</div>
+                        <div class="custom-select-option" data-value="ECE">ECE</div>
+                        <div class="custom-select-option" data-value="EEE">EEE</div>
+                        <div class="custom-select-option" data-value="MECH">MECH</div>
+                        <div class="custom-select-option" data-value="CIVIL">CIVIL</div>
+                        <div class="custom-select-option" data-value="AIDS">AIDS</div>
+                    </div>
+                </div>
+
+                <label for="age">Age</label>
+                <input type="number"
+                       id="age"
+                       name="age"
+                       value="{{ form_data.age|default:'' }}"
+                       placeholder="Enter age"
+                       min="15"
+                       max="100"
+                       required>
+
+                <label for="roll_no">Roll No</label>
+                <input type="text"
+                       id="roll_no"
+                       name="roll_no"
+                       value="{{ form_data.roll_no|default:'' }}"
+                       placeholder="Enter roll number"
+                       required>
+
+                <label for="email">Gmail Address</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       value="{{ form_data.email|default:'' }}"
+                       placeholder="Enter Gmail address"
+                       required
+                       pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$">
+
+                <button type="submit">Add Student</button>
+            </form>
+
+            <div class="top-buttons">
+                <a href="{% url 'student_list' %}" class="main-btn btn-info">View Students</a>
+                <a href="{% url 'home' %}" class="main-btn btn-secondary">Dashboard</a>
+                <a href="{% url 'logout' %}" class="main-btn btn-danger">Logout</a>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        (function () {
+            const wrapper = document.getElementById('deptWrapper');
+            const trigger = document.getElementById('deptTrigger');
+            const label   = document.getElementById('deptLabel');
+            const options = document.getElementById('deptOptions');
+            const select  = document.getElementById('department');
+
+            // Pre-select if form_data already has a value (on validation error re-render)
+            const preSelected = select.value;
+            if (preSelected) {
+                label.textContent = preSelected;
+                trigger.classList.add('has-value');
+                const match = options.querySelector(`[data-value="${preSelected}"]`);
+                if (match) match.classList.add('selected');
+            }
+
+            function openDropdown() {
+                wrapper.classList.add('open');
+                trigger.focus();
+            }
+
+            function closeDropdown() {
+                wrapper.classList.remove('open');
+            }
+
+            trigger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                wrapper.classList.contains('open') ? closeDropdown() : openDropdown();
+            });
+
+            wrapper.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    wrapper.classList.contains('open') ? closeDropdown() : openDropdown();
+                }
+                if (e.key === 'Escape') closeDropdown();
+            });
+
+            options.querySelectorAll('.custom-select-option').forEach(function (opt) {
+                opt.addEventListener('click', function () {
+                    const val = this.getAttribute('data-value');
+
+                    // Update hidden select
+                    select.value = val;
+
+                    // Update trigger label
+                    label.textContent = val;
+                    trigger.classList.add('has-value');
+
+                    // Mark selected option
+                    options.querySelectorAll('.custom-select-option').forEach(function (o) {
+                        o.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+
+                    closeDropdown();
+                });
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!wrapper.contains(e.target)) closeDropdown();
+            });
+        })();
+    </script>
 </body>
 
 </html>

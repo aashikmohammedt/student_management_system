@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - Confirm Delete</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="page-shell">
+
+        <!-- Header -->
+        <div class="page-header">
+            <div class="brand-badge">Student Management System</div>
+            <h1 class="app-title">Student Management System</h1>
+            <p class="page-subtitle">
+                Please confirm before permanently deleting a student record.
+            </p>
+        </div>
+
+        <!-- Confirmation Card -->
+        <div class="success-box">
+            <h2>Confirm Deletion</h2>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message-box {% if message.tags == 'error' %}error-message{% elif message.tags == 'success' %}success-message{% else %}info-message{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="message-box error-message">
+                Are you sure you want to delete this student?
+            </div>
+
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Department:</strong> {{ student.department }}</p>
+            <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+
+            <form method="POST" action="{% url 'delete_student' student.id %}" class="confirm-delete-form">
+                {% csrf_token %}
+                <div class="top-buttons">
+                    <button type="submit" class="main-btn btn-danger confirm-delete-btn">Yes, Delete</button>
+                    <a href="{% url 'student_list' %}" class="main-btn btn-secondary">No, Cancel</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>

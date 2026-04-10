@@ -1,29 +1,50 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - Dashboard</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
-    <div class="container">
-        <h1>Welcome to Student CRUD App</h1>
+    <div class="page-shell">
 
-        {% if login_message %}
-            <div class="message-box success-message">
-                {{ login_message }}
-            </div>
-        {% endif %}
-
-        <p style="margin-bottom: 10px; color: #1f2937; font-size: 18px;">
-            Logged in as: <strong>{{ username }}</strong>
-        </p>
-
-        <div class="top-buttons">
-            <a href="/form/" class="main-btn">Add Student</a>
-            <a href="/students/" class="main-btn">View Students</a>
-            <a href="/logout/" class="main-btn logout-btn">Logout</a>
+        <!-- Header -->
+        <div class="page-header">
+            <div class="brand-badge">Student Management System</div>
+            <h1 class="app-title">Student Management System</h1>
+            <p class="page-subtitle">
+                A professional dashboard to manage student records, streamline updates, and maintain data efficiently.
+            </p>
         </div>
+
+        <!-- Dashboard Card -->
+        <div class="container">
+            <h2>Dashboard</h2>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message-box {% if message.tags == 'error' %}error-message{% elif message.tags == 'success' %}success-message{% else %}info-message{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <p class="user-info">
+                Logged in as: <strong>{{ username }}</strong>
+            </p>
+
+            <div class="top-buttons">
+                <a href="{% url 'student_form' %}" class="main-btn btn-success">Add Student</a>
+                <a href="{% url 'student_list' %}" class="main-btn btn-info">View Students</a>
+                <a href="{% url 'logout' %}" class="main-btn btn-danger">Logout</a>
+            </div>
+        </div>
+
     </div>
 </body>
+
 </html>

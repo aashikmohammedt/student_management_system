@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from myapp.views import (
@@ -32,3 +34,9 @@ urlpatterns = [
     path("delete-confirm/<str:id>/", delete_confirm, name="delete_confirm"),
     path("delete/<str:id>/", delete_student, name="delete_student"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.STATIC_URL,
+        document_root=settings.STATICFILES_DIRS[0]
+    )

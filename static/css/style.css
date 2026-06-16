@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 /* =========================================
    STUDENT MANAGEMENT SYSTEM - FINAL PREMIUM UI
    Corporate Style | Fully Responsive | Synced with all HTML files
@@ -49,7 +50,7 @@ html {
 }
 
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
     background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
     color: var(--text-main);
     min-height: 100vh;

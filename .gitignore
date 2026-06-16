@@ -1,9 +1,8 @@
-    @"
+venv/
+myproject/venv/
+
 __pycache__/
 *.pyc
+.env
 db.sqlite3
 staticfiles/
-venv/
-.venv/
-.env
-"@ | Set-Content .gitignore

@@ -708,6 +708,9 @@ tr:last-child td {
     table {
         min-width: 820px;
     }
+    .table-wrapper {
+    width: 100%;
+}
 }
 
 /* ========== MOBILE ========== */
